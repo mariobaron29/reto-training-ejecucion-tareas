@@ -1,0 +1,17 @@
+dependencies {
+    compile project(':helpers-reactive-repository-commons')
+    compile project(':domain-aif')
+
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'javax.cache:cache-api:1.1.1'
+    compile 'org.ehcache:ehcache:3.8.1'
+
+    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+    testCompile 'org.reactivecommons.utils:object-mapper:0.1.0'
+    compile 'org.reactivecommons:async-commons-api:0.4.7'
+    compile 'org.reactivecommons.utils:object-mapper:0.1.0'
+    compile 'org.reactivecommons:async-commons-starter:0.4.7'
+
+}
+
