@@ -32,36 +32,29 @@ JobCanonical canonical = (JobCanonical) event.getCanonical().getData();
     }
 
     private Mono<JobResponse> scheduleNewJob(JobCanonical jobCanonical) {
-        /*CronExpression expression = new CronExpression("10 * * * * *");
-        var result = expression.next(LocalDateTime.now());
-        System.out.println(result);*/
-        //Create instance of factory
-        SchedulerFactory schedulerFactory=new StdSchedulerFactory();
-try {
-    //Get scheduler
-    Scheduler scheduler = schedulerFactory.getScheduler();
+        SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
-    //Create JobDetail object specifying which Job you want to execute
-    JobDetail jobDetail = JobBuilder.newJob(Task.class)
+    try {
+
+        Scheduler scheduler = schedulerFactory.getScheduler();
+        JobDetail jobDetail = JobBuilder.newJob(Task.class)
+                    .withIdentity(jobCanonical.getId())
+                .build();
+
+        CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(jobCanonical.getId())
-            .build();
+                .withSchedule(CronScheduleBuilder.cronSchedule(jobCanonical.getCronRegExp()))
+                .forJob(jobCanonical.getId())
+                .build();
 
-    //Associate Trigger to the Job
-    CronTrigger trigger = TriggerBuilder.newTrigger()
-            .withIdentity(jobCanonical.getId())
-            .withSchedule(CronScheduleBuilder.cronSchedule(jobCanonical.getCronRegExp()))
-            .forJob(jobCanonical.getId())
-            .build();
+        scheduler.scheduleJob(jobDetail, trigger);
 
-    //Pass JobDetail and trigger dependencies to schedular
-    scheduler.scheduleJob(jobDetail, trigger);
+        scheduler.start();
 
-    //Start schedular
-    scheduler.start();
-}catch (SchedulerException exc){
-    exc.printStackTrace();
+    } catch(SchedulerException exc){
+        exc.printStackTrace();
 
-}
+    }
         return configBuilder.getJobRepository()
                         .save(buildJob(jobCanonical))
                 .then(Mono.just(JobResponse.builder()

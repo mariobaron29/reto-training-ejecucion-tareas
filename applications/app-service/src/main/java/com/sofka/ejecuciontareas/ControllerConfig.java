@@ -4,8 +4,6 @@ import com.sofka.ejecuciontareas.common.event.EventsGateway;
 import com.sofka.ejecuciontareas.configbuilder.ConfigBuilder;
 import com.sofka.ejecuciontareas.configbuilder.ConfigParameters;
 import com.sofka.ejecuciontareas.domain.canonical.JobCanonicalRepository;
-import com.sofka.ejecuciontareas.reactive.custom_reactive_listener.CustomMessageConverter;
-import com.sofka.ejecuciontareas.reactive.custom_reactive_listener.CustomMessageConverterImpl;
 import lombok.extern.java.Log;
 import org.reactivecommons.async.impl.config.RabbitMqConfig;
 import org.reactivecommons.async.impl.converters.json.ObjectMapperSupplier;
@@ -53,12 +51,6 @@ public class ControllerConfig {
                                 .build())
                         .build()
         );
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public CustomMessageConverter customMessageConverter(ObjectMapperSupplier objectMapperSupplier) {
-        return new CustomMessageConverterImpl(objectMapperSupplier.get());
     }
 
     @Bean
