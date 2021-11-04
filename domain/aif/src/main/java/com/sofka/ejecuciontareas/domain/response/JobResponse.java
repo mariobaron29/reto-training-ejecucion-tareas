@@ -1,6 +1,6 @@
 package com.sofka.ejecuciontareas.domain.response;
 
-import com.sofka.ejecuciontareas.domain.canonical.JobCanonical;
+import com.sofka.ejecuciontareas.domain.canonical.jobexecution.JobExecutionCanonical;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +8,6 @@ import lombok.Data;
 @Builder(toBuilder = true)
 public class JobResponse {
 
-    private final JobCanonical jobCanonical;
+    private final JobExecutionCanonical jobExecutionCanonical;
 
 }

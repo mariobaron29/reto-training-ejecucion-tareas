@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @Builder(toBuilder = true)
-public class JobScheduledEvent implements Event {
+public class JobExecutedEvent implements Event {
 
-    public static final String EVENT_NAME = "tareas.job.scheduled";
+    public static final String EVENT_NAME = "tareas.job.executed";
     private final CanonicalNotification canonical;
 
     @Override

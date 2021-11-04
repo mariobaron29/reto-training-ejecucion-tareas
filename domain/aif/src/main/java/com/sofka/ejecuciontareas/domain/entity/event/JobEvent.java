@@ -1,14 +1,15 @@
-package com.sofka.ejecuciontareas.domain;
+package com.sofka.ejecuciontareas.domain.entity.event;
 
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 @Builder(toBuilder = true)
-public class Job {
-    private String id;
+public class JobEvent {
+    private String eventId;
+    private String eventName;
+
+    private String jobId;
     private String url;
     private String timeZone;
     private String email;
