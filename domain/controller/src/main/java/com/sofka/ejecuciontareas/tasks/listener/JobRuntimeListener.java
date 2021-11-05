@@ -59,18 +59,6 @@ public class JobRuntimeListener implements JobListener, JobFactory {
     public void jobToBeExecuted(JobExecutionContext context) {
         System.out.println("Job to be executed with key " + context.getJobDetail().getKey().toString()
                 + " finished in " + context.getJobRunTime() + " ms.");
-
-        /*executionController.processJobScheduled(JobEvent.builder()
-                    .url(jobEvent.getUrl())
-                    .timeZone(jobEvent.getTimeZone())
-                    .status(jobEvent.getStatus())
-                    .email(jobEvent.getEmail())
-                    .cronRegExp(jobEvent.getCronRegExp())
-                    .eventName(JobScheduledEvent.EVENT_NAME)
-                    .eventId(UUID.randomUUID().toString())
-                    .jobId(jobEvent.getJobId())
-                .build());*/
-
     }
 
     @Override

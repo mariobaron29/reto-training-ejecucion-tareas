@@ -33,7 +33,8 @@ public class JobController implements JobFactory, HeaderFactory {
 
     public Mono<Void> processCreateJobEvent(JobEvent event) {
         return scheduleNewJob(event)
-                .flatMap(jobResponse -> emitJobScheduledEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()).then());
+                .then(emitJobScheduledEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()))
+                .then();
     }
 
     private Mono<JobResponse> scheduleNewJob(JobEvent event) {
@@ -68,15 +69,7 @@ public class JobController implements JobFactory, HeaderFactory {
 
         return saveJobExecution(buildJobExecution(execution))
                 .flatMap(jobResponse -> saveJobEvent(event))
-                .flatMap(jobEventResponse ->
-                        emitJobExecutedEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()));
-    }
-
-    public Mono<JobResponse> processJobScheduled(JobEvent event) {
-
-        return saveJobEvent(event)
-                .flatMap(jobEventResponse ->
-                        emitJobScheduledEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()));
+                .thenReturn(emitJobExecutedEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()));
     }
 
     private Mono<JobResponse> saveJobExecution(JobExecutionCanonical jobExecutionCanonical) {
@@ -92,32 +85,21 @@ public class JobController implements JobFactory, HeaderFactory {
                 .save(event).block());
     }
 
-    private Mono<JobEvent> emitJobExecutedEvent(JobEventCanonical jobEventCanonical, String uuid, String serviceName) {
+    private JobEvent emitJobExecutedEvent(JobEventCanonical jobEventCanonical, String uuid, String serviceName) {
         return Mono.just(new JobExecutedEvent(CanonicalNotification.<JobEvent>builder()
                         .header(getHeader(uuid, serviceName))
                         .data(buildJobEvent(jobEventCanonical))
                         .build()))
                 .flatMap(event -> configBuilder.getEventsGateway().emit(event))
-                .thenReturn(buildJobEvent(jobEventCanonical));
+                .thenReturn(buildJobEvent(jobEventCanonical)).block();
     }
 
     private Mono<JobResponse> emitJobScheduledEvent(JobEventCanonical jobEventCanonical, String uuid, String serviceName) {
         return Mono.just(new JobScheduledEvent(CanonicalNotification.<JobEvent>builder()
                         .header(getHeader(uuid, serviceName))
-                        .data(JobEvent.builder()
-                                .eventId(jobEventCanonical.getEventId())
-                                .eventName(jobEventCanonical.getEventName())
-                                .jobId(jobEventCanonical.getJobId())
-                                .cronRegExp(jobEventCanonical.getCronRegExp())
-                                .email(jobEventCanonical.getEmail())
-                                .status(jobEventCanonical.getStatus())
-                                .timeZone(jobEventCanonical.getTimeZone())
-                                .url(jobEventCanonical.getUrl())
-                                .build())
+                        .data(buildJobEvent(jobEventCanonical))
                         .build()))
                 .flatMap(event -> configBuilder.getEventsGateway().emit(event))
-                .thenReturn(JobResponse.builder()
-                        //.jobExecutionCanonical(jobEvent)
-                        .build());
+                .thenReturn(JobResponse.builder().build());
     }
 }
