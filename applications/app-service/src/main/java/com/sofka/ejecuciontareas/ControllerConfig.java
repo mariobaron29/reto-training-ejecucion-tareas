@@ -1,5 +1,6 @@
 package com.sofka.ejecuciontareas;
 
+import com.sofka.ejecuciontareas.command.JobController;
 import com.sofka.ejecuciontareas.common.event.EventsGateway;
 import com.sofka.ejecuciontareas.configbuilder.ConfigBuilder;
 import com.sofka.ejecuciontareas.configbuilder.ConfigParameters;

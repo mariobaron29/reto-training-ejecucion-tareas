@@ -1,8 +1,7 @@
-package com.sofka.ejecuciontareas.tasks.listener;
+package com.sofka.ejecuciontareas.command.tasks.listener;
 
-import com.sofka.ejecuciontareas.JobController;
+import com.sofka.ejecuciontareas.command.JobController;
 import com.sofka.ejecuciontareas.common.event.JobExecutedEvent;
-import com.sofka.ejecuciontareas.common.event.JobScheduledEvent;
 import com.sofka.ejecuciontareas.domain.entity.event.JobEvent;
 import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobExecution;
 import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobFactory;

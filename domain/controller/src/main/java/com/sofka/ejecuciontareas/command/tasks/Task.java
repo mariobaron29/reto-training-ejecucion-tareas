@@ -1,4 +1,4 @@
-package com.sofka.ejecuciontareas.tasks;
+package com.sofka.ejecuciontareas.command.tasks;
 
 import com.sofka.ejecuciontareas.domain.entity.event.JobEvent;
 import org.quartz.Job;

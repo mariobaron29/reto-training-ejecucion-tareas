@@ -1,4 +1,4 @@
-package com.sofka.ejecuciontareas;
+package com.sofka.ejecuciontareas.command;
 
 import com.sofka.ejecuciontareas.common.event.JobExecutedEvent;
 import com.sofka.ejecuciontareas.common.event.JobScheduledEvent;
@@ -11,9 +11,10 @@ import com.sofka.ejecuciontareas.domain.entity.event.JobEvent;
 import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobExecution;
 import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobFactory;
 import com.sofka.ejecuciontareas.domain.response.JobResponse;
-import com.sofka.ejecuciontareas.tasks.CustomJobFactory;
-import com.sofka.ejecuciontareas.tasks.Task;
-import com.sofka.ejecuciontareas.tasks.listener.JobRuntimeListener;
+import com.sofka.ejecuciontareas.command.tasks.listener.JobRuntimeListener;
+import com.sofka.ejecuciontareas.command.tasks.Task;
+import com.sofka.ejecuciontareas.command.tasks.CustomJobFactory;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.quartz.*;

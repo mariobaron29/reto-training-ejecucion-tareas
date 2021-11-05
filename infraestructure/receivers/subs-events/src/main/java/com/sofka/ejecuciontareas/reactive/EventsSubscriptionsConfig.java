@@ -1,7 +1,7 @@
 package com.sofka.ejecuciontareas.reactive;
 
 
-import com.sofka.ejecuciontareas.JobController;
+import com.sofka.ejecuciontareas.command.JobController;
 import lombok.RequiredArgsConstructor;
 import org.reactivecommons.api.domain.DomainEvent;
 import org.reactivecommons.async.api.HandlerRegistry;
