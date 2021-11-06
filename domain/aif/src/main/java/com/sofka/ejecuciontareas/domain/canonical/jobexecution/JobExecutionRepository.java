@@ -8,7 +8,8 @@ import reactor.core.publisher.Mono;
 public interface JobExecutionRepository {
 
     Mono<JobExecution> save(JobExecution data);
-    //Flux<JobExecution> findByJobId(String id);
+    Mono<JobExecution> findById(String id);
+    Flux<JobExecution> findByJobId(String id);
     Flux<JobExecution> findAll();
 
 }

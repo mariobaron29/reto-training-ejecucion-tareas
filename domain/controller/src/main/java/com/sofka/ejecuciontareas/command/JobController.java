@@ -21,6 +21,7 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 @Log
@@ -63,21 +64,21 @@ public class JobController implements JobFactory, HeaderFactory {
         exc.printStackTrace();
 
     }
-        return Mono.just(JobResponse.builder().build());// TODO return response
+        return Mono.just(JobResponse.builder().build());
     }
 
     public Mono<JobEvent> processJobExecuted(JobExecution execution, JobEvent event) {
 
-        return saveJobExecution(buildJobExecution(execution))
+        return saveJobExecution(buildJobExecutionCanonical(execution))
                 .flatMap(jobResponse -> saveJobEvent(event))
                 .thenReturn(emitJobExecutedEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()));
     }
 
     private Mono<JobResponse> saveJobExecution(JobExecutionCanonical jobExecutionCanonical) {
         return  Mono.just(configBuilder.getJobExecutionRepository()
-                .save(buildJobExecution(jobExecutionCanonical)).block())
+                .save(buildJobExecutionCanonical(jobExecutionCanonical)).block())
                 .flatMap(jobEvent -> Mono.just(JobResponse.builder()
-                            .jobExecutionCanonical(jobExecutionCanonical)
+                            .jobExecutionCanonical(Arrays.asList(jobExecutionCanonical))
                         .build()));
     }
 

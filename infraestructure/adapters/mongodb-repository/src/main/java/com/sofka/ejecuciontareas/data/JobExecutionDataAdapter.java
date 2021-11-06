@@ -28,4 +28,14 @@ public class JobExecutionDataAdapter
     public Flux<JobExecution> findAll() {
         return doQueryMany(repository.findAll());
     }
+
+    @Override
+    public Mono<JobExecution> findById(String id) {
+        return doQuery(repository.findById(id));
+    }
+
+    @Override
+    public Flux<JobExecution> findByJobId(String id) {
+        return Flux.empty();
+    }
 }

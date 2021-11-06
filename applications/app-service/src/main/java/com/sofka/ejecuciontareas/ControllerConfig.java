@@ -4,7 +4,9 @@ import com.sofka.ejecuciontareas.command.JobController;
 import com.sofka.ejecuciontareas.common.event.EventsGateway;
 import com.sofka.ejecuciontareas.configbuilder.ConfigBuilder;
 import com.sofka.ejecuciontareas.configbuilder.ConfigParameters;
+import com.sofka.ejecuciontareas.domain.canonical.event.EventCanonicalRepository;
 import com.sofka.ejecuciontareas.domain.canonical.jobexecution.JobExecutionRepository;
+import com.sofka.ejecuciontareas.query.JobExecutionQueryController;
 import lombok.extern.java.Log;
 import org.reactivecommons.async.impl.config.RabbitMqConfig;
 import org.reactivecommons.utils.ObjectMapper;
@@ -43,6 +45,26 @@ public class ControllerConfig {
                 ConfigBuilder.builder()
                         .eventsGateway(eventsGateway)
                         .jobExecutionRepository(jobRepository)
+                        .configParameters(ConfigParameters.builder()
+                                .componentName(componentName)
+                                .serviceName(serviceName)
+                                .operation(operation)
+                                .build())
+                        .build()
+        );
+    }
+
+    @Bean
+    public JobExecutionQueryController jobExecutionQueryController(
+            EventsGateway eventsGateway,
+            JobExecutionRepository jobRepository,
+            EventCanonicalRepository eventRepository
+    ) {
+        return new JobExecutionQueryController(
+                ConfigBuilder.builder()
+                        .eventsGateway(eventsGateway)
+                        .jobExecutionRepository(jobRepository)
+                        .eventRepository(eventRepository)
                         .configParameters(ConfigParameters.builder()
                                 .componentName(componentName)
                                 .serviceName(serviceName)

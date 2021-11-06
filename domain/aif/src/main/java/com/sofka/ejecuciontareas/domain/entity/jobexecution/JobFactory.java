@@ -18,7 +18,6 @@ public interface JobFactory {
                     .status(event.getStatus())
                     .timeZone(event.getTimeZone())
                     .url(event.getUrl())
-                    .status(event.getStatus())
                 .build();
     }
 
@@ -36,7 +35,7 @@ public interface JobFactory {
                 .build();
     }
 
-    default JobExecutionCanonical buildJobExecution(JobExecution execution) {
+    default JobExecutionCanonical buildJobExecutionCanonical(JobExecution execution) {
         return com.sofka.ejecuciontareas.domain.canonical.jobexecution.JobExecutionCanonical.builder()
                     .id(execution.getId())
                     .executionTime(execution.getExecutionTime())
@@ -50,7 +49,7 @@ public interface JobFactory {
                 .build();
     }
 
-    default JobExecution buildJobExecution(JobExecutionCanonical canonical) {
+    default JobExecution buildJobExecutionCanonical(JobExecutionCanonical canonical) {
         return JobExecution.builder()
                     .id(canonical.getId())
                     .executionTime(canonical.getExecutionTime())

@@ -4,9 +4,13 @@ import com.sofka.ejecuciontareas.common.event.notification.HeaderFactory;
 import com.sofka.ejecuciontareas.configbuilder.ConfigBuilder;
 import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobExecution;
 import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobFactory;
+import com.sofka.ejecuciontareas.domain.response.JobResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
 
 
 @Log
@@ -17,12 +21,24 @@ public class JobExecutionQueryController implements JobFactory, HeaderFactory {
 
     public Flux<JobExecution> processFindAllJobExecutions() {
 
-        return findAllJobExecutions();
+        return configBuilder.getJobExecutionRepository().findAll();
 
     }
 
-    private Flux<JobExecution> findAllJobExecutions() {
-        return configBuilder.getJobExecutionRepository().findAll();
-     }
+    public Mono<JobResponse> processFindJobExecutionById(String id) {
+        return configBuilder.getJobExecutionRepository()
+                .findById(id)
+                .flatMap(job -> Mono.just(JobResponse.builder()
+                        .jobExecutionCanonical(Arrays.asList( buildJobExecutionCanonical(job)  ))
+                        .build()));
+    }
+
+    public Mono<JobResponse> processFindJobExecutionByJobId(String id) {
+        return configBuilder.getJobExecutionRepository()
+                .findById(id)
+                .flatMap(job -> Mono.just(JobResponse.builder()
+                        .jobExecutionCanonical(Arrays.asList(buildJobExecutionCanonical(job)))
+                        .build()));
+    }
 
 }

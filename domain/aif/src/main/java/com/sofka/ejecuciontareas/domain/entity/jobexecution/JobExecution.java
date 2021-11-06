@@ -15,7 +15,7 @@ public class JobExecution {
     private Date endTime;
     private Long executionTime;
     private String httpCode;
-    private String status;
+    private Boolean status;
     private String output;
 
 }

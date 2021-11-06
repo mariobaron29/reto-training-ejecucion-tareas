@@ -4,10 +4,12 @@ import com.sofka.ejecuciontareas.domain.canonical.jobexecution.JobExecutionCanon
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder(toBuilder = true)
 public class JobResponse {
 
-    private final JobExecutionCanonical jobExecutionCanonical;
+    private final List<JobExecutionCanonical> jobExecutionCanonical;
 
 }

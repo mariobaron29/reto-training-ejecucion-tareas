@@ -22,6 +22,6 @@ public class JobExecutionCanonical {
     private Date endTime;
     private Long executionTime;
     private String httpCode;
-    private String status;
+    private Boolean status;
     private String output;
 }

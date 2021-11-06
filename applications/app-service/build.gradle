@@ -6,6 +6,7 @@ dependencies {
 
     compile project(":adapters-async-event-bus")
 
+    compile project(":receivers-reactive-web")
     compile project(":receivers-subs-events")
     compile project(":adapters-mongodb-repository")
 

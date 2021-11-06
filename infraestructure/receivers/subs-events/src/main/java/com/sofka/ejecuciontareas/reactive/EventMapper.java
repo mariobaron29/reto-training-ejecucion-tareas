@@ -31,7 +31,7 @@ public class EventMapper implements ObjectMapperDomain {
                     .eventName((String) data.get("eventName"))
                     .cronRegExp((String) data.get("cronRegExp"))
                     .email((String) data.get("email"))
-                    .status((String) data.get("status"))
+                    .status((Boolean) data.get("status"))
                     .timeZone((String) data.get("timeZone"))
                     .url((String) data.get("url"))
                 .build();
