@@ -71,7 +71,7 @@ public class JobController implements JobFactory, HeaderFactory {
 
         return saveJobExecution(buildJobExecutionCanonical(execution))
                 .flatMap(jobResponse -> saveJobEvent(event))
-                .thenReturn(emitJobExecutedEvent(buildJobEventCanonical(event), uuid, configBuilder.getConfigParameters().getServiceName()));
+                .thenReturn(emitJobExecutedEvent(buildJobEventCanonical(event,execution), uuid, configBuilder.getConfigParameters().getServiceName()));
     }
 
     private Mono<JobResponse> saveJobExecution(JobExecutionCanonical jobExecutionCanonical) {

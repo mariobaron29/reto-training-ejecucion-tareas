@@ -21,10 +21,39 @@ public interface JobFactory {
                 .build();
     }
 
+    default JobEventCanonical buildJobEventCanonical(JobEvent event, JobExecution jobExecution) {
+        return JobEventCanonical.builder()
+                    .eventId(event.getEventId())
+                    .eventName(event.getEventName())
+                    .jobId(event.getEventId())
+                    .cronRegExp(event.getCronRegExp())
+                    .email(event.getEmail())
+                    .status(event.getStatus())
+                    .timeZone(event.getTimeZone())
+                    .url(event.getUrl())
+                    .jobExecution(jobExecution)
+                .build();
+    }
+
     default JobEvent buildJobEvent(JobEventCanonical event) {
         return JobEvent.builder()
                     .eventId(event.getEventId())
                     .eventName(event.getEventName())
+                    .jobId(event.getEventId())
+                    .cronRegExp(event.getCronRegExp())
+                    .email(event.getEmail())
+                    .status(event.getStatus())
+                    .timeZone(event.getTimeZone())
+                    .url(event.getUrl())
+                    .status(event.getStatus())
+                    .jobExecution(event.getJobExecution())
+                .build();
+    }
+
+    default JobEvent buildJobEvent(JobEvent event, String eventId, String eventName) {
+        return JobEvent.builder()
+                    .eventId(eventId)
+                    .eventName(eventName)
                     .jobId(event.getEventId())
                     .cronRegExp(event.getCronRegExp())
                     .email(event.getEmail())

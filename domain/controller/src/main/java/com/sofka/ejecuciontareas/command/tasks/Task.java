@@ -24,10 +24,21 @@ public class Task implements Job {
             con.setRequestMethod("GET");
             System.out.println("Response code: " + con.getResponseCode());
             System.out.println("Response message: " + con.getResponseMessage());
+            System.out.println("Response content: " + con.getContent());
+
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_code", con.getResponseCode());
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_message", con.getResponseMessage());
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_content", con.getContent().toString());
+
         } catch (ProtocolException | MalformedURLException e) {
-            e.printStackTrace();
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_code", 400);
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_message", e.getMessage());
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_content", e.toString());
+
         } catch (IOException e) {
-            e.printStackTrace();
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_code", 404);
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_message", e.getMessage());
+            jobExecutionContext.getJobDetail().getJobDataMap().put("response_content", e.toString());
         }
     }
 

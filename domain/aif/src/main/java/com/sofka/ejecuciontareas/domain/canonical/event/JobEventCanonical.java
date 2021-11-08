@@ -1,6 +1,7 @@
 package com.sofka.ejecuciontareas.domain.canonical.event;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobExecution;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +23,7 @@ public class JobEventCanonical {
     private String email;
     private String cronRegExp;
     private Boolean status;
+
+    private JobExecution jobExecution;
 
 }

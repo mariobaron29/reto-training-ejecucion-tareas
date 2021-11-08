@@ -1,5 +1,6 @@
 package com.sofka.ejecuciontareas.domain.entity.event;
 
+import com.sofka.ejecuciontareas.domain.entity.jobexecution.JobExecution;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,5 +16,7 @@ public class JobEvent {
     private String email;
     private String cronRegExp;
     private Boolean status;
+
+    private JobExecution jobExecution;
 
 }

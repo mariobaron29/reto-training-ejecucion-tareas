@@ -40,18 +40,9 @@ public class JobRuntimeListener implements JobListener, JobFactory {
                         .id(UUID.randomUUID().toString())
                         .jobId(context.getJobDetail().getKey().getName())
                         .endTime(new Date())
-                        .httpCode("200")//TODO: como lo obtengo?
-                        .output("") // TODO: que es?
-                .build(), JobEvent.builder()
-                        .url(jobEvent.getUrl())
-                        .timeZone(jobEvent.getTimeZone())
-                        .status(jobEvent.getStatus())
-                        .email(jobEvent.getEmail())
-                        .cronRegExp(jobEvent.getCronRegExp())
-                        .eventName(JobExecutedEvent.EVENT_NAME)
-                        .eventId(UUID.randomUUID().toString())
-                        .jobId(jobEvent.getJobId())
-                    .build());
+                        .httpCode(((Integer)context.getJobDetail().getJobDataMap().get("response_code")).toString())
+                        .output((String)context.getJobDetail().getJobDataMap().get("response_content"))
+                .build(), buildJobEvent(jobEvent, UUID.randomUUID().toString(),JobExecutedEvent.EVENT_NAME) );
     }
 
     @Override
